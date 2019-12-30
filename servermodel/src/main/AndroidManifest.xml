@@ -8,11 +8,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <service
+            android:name=".ServerAidlService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.yghysdr.server.action1" />
+            </intent-filter>
+        </service>
+
+        <service
             android:name=".ServerService"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
-                <action android:name="com.yghysdr.server.action" />
+                <action android:name="com.yghysdr.server.action2" />
             </intent-filter>
         </service>
 

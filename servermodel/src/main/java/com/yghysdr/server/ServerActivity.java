@@ -16,6 +16,7 @@ public class ServerActivity extends AppCompatActivity {
         findViewById(R.id.viewStartServer).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                startService(new Intent(ServerActivity.this, ServerAidlService.class));
                 startService(new Intent(ServerActivity.this, ServerService.class));
             }
         });

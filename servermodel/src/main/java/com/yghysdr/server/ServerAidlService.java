@@ -3,19 +3,18 @@ package com.yghysdr.server;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+import android.os.RemoteException;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
-
+import com.yghysdr.serverinterface.IServerAutoAidlInterface;
 import com.yghysdr.serverinterface.ServerClass;
-import com.yghysdr.serverinterface.ServerStub;
 
-public class ServerService extends Service {
+public class ServerAidlService extends Service {
 
-    private static final String TAG = ServerService.class.getSimpleName();
+    private static final String TAG = ServerAidlService.class.getSimpleName();
 
 
-    public ServerService() {
+    public ServerAidlService() {
     }
 
     @Override
@@ -23,17 +22,17 @@ public class ServerService extends Service {
         return serverStub;
     }
 
-    private ServerStub serverStub = new ServerStub() {
+    private IServerAutoAidlInterface.Stub serverStub = new IServerAutoAidlInterface.Stub() {
 
         @Override
-        public int add(int count1, int count2) {
+        public int getCount(int count1, int count2) throws RemoteException {
             this.count++;
             Log.d(TAG, "addCount: " + count);
             return Math.max(count1, count2);
         }
 
         @Override
-        public int add1(@NonNull ServerClass serverClass) {
+        public int getCount1(ServerClass serverClass) throws RemoteException {
             this.count++;
             Log.d(TAG, "addCount: " + count);
             return Math.max(serverClass.getCount1(), serverClass.getCount2());
