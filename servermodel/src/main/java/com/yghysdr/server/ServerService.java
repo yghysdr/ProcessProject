@@ -36,6 +36,11 @@ public class ServerService extends Service {
         public int add1(@NonNull ServerClass serverClass) {
             this.count++;
             Log.d(TAG, "addCount: " + count);
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             return Math.max(serverClass.getCount1(), serverClass.getCount2());
         }
 

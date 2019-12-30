@@ -2,6 +2,7 @@ package com.yghysdr.serverinterface;
 
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -50,7 +51,10 @@ class ServerProxy implements IServerInterface {
         try {
             _data.writeInterfaceToken(getInterfaceDescriptor());
             serverClass.writeToParcel(_data, 0);
+            long startTime = System.currentTimeMillis();
+            Log.d("ServerProxy-ServerStub", "add1: " + Thread.currentThread() + "..." + startTime);
             mRemote.transact(ServerStub.TRANSACTION_addCount_1, _data, _reply, 0);
+            Log.d("ServerProxy-ServerStub", "add1: " + Thread.currentThread() + "..." +( System.currentTimeMillis() - startTime));
             _reply.readException();
             _result = _reply.readInt();
             serverClass.readFromParcel(_reply);

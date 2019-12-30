@@ -1,4 +1,6 @@
-### servermodel 是服务端
 
-
-### app是客户端
+> 服务端暴露接口IServiceInterface，定义Stub继承Binder，并且对外提供 asInterface(IBinder iBinder)方法，更具传递进来的iBinder
+返回服务端暴露接口的实现。通过查找本地是否存在，存在直接返回查找结果，不存在时返回binder在服务端的代理对象Proxy对象（implements IServiceInterface）
+此时也说明binder是远程服务的binder。当用户调用Proxy的代理方法时，Proxy对象主要是根据调用的方法的参数封装到Parcel里，
+调用binder的transact方法（此时客户端binder会进入挂起状态等待返回结果），远程服务也维护一个Stub对象（和客户端代码逻辑相同，同一个类的不同对象而已），
+服务端Stub会触发onTransact方法，根据参数和Parcel来调用制定的方法，并且通过客户端传递过来的另一个Parcel返回数据，然后唤起Proxy调用transact的地方。

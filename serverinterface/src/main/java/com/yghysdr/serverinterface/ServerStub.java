@@ -5,6 +5,7 @@ import android.os.IBinder;
 import android.os.IInterface;
 import android.os.Parcel;
 import android.os.RemoteException;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -52,7 +53,10 @@ public abstract class ServerStub extends Binder implements IServerInterface {
         } else if (code == TRANSACTION_addCount_1) {
             data.enforceInterface(DESCRIPTOR);
             ServerClass _arg0 = ServerClass.CREATOR.createFromParcel(data);
+            long timeMillis = System.currentTimeMillis();
+            Log.d("ServerProxy-ServerStub", "onTransact: " + Thread.currentThread() + "..." + timeMillis);
             int _result = this.add1(_arg0);
+            Log.d("ServerProxy-ServerStub", "onTransact: " + Thread.currentThread() + "..." + (System.currentTimeMillis() - timeMillis));
             if (reply != null) {
                 reply.writeNoException();
                 reply.writeInt(_result);
